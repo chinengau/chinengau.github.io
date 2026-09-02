@@ -89,6 +89,7 @@ def marquee(imgs, cols, cls):
 home = f'''
 <header class="hero" id="top">
   <div class="poster"></div>
+  <video id="bgvid" class="bgvid" muted loop playsinline preload="auto" disablepictureinpicture></video>
   <div id="ytwrap" class="yt"><div id="ytbg"></div></div>
   <div id="curtain" class="curtain"></div>
   <div class="shade"></div>
