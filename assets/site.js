@@ -37,12 +37,12 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
 document.querySelectorAll('#yr').forEach(el => el.textContent = new Date().getFullYear());
 
 /* looping background reel on the home page */
-const ytbg = document.getElementById('ytbg');
-if (ytbg) {
+const ytwrap = document.getElementById('ytwrap');
+if (ytwrap) {
   function sizeBg(){
     const w = innerWidth, h = innerHeight;
     let vw = w, vh = w * 9 / 16; if (vh < h) { vh = h; vw = h * 16 / 9; }
-    ytbg.style.width = (vw * 1.06) + 'px'; ytbg.style.height = (vh * 1.06) + 'px';
+    ytwrap.style.width = (vw * 1.06) + 'px'; ytwrap.style.height = (vh * 1.06) + 'px';
   }
   sizeBg(); addEventListener('resize', sizeBg);
   const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
@@ -52,8 +52,19 @@ if (ytbg) {
       events: {
         onReady: e => { e.target.mute(); e.target.playVideo(); },
         onStateChange: e => {
-          if (e.data === YT.PlayerState.PLAYING) document.getElementById('ytbg').classList.add('on');
-          if (e.data === YT.PlayerState.ENDED) { e.target.seekTo(REEL_START); e.target.playVideo(); }
+          const S = YT.PlayerState;
+          if (e.data === S.PLAYING) {
+            // only reveal once frames are genuinely rolling, so YouTube's
+            // play-button overlay is never visible
+            const t0 = e.target.getCurrentTime();
+            const iv = setInterval(() => {
+              try { if (e.target.getCurrentTime() > t0 + 0.35) { ytwrap.classList.add('on'); clearInterval(iv); } } catch(err) { clearInterval(iv); }
+            }, 80);
+            setTimeout(() => clearInterval(iv), 6000);
+          } else if (e.data === S.PAUSED || e.data === -1 || e.data === S.CUED) {
+            ytwrap.classList.remove('on');
+          }
+          if (e.data === S.ENDED) { e.target.seekTo(REEL_START); e.target.playVideo(); }
         }
       }});
     setInterval(() => { try { if (p.getCurrentTime() < REEL_START - .5) p.seekTo(REEL_START); } catch(e) {} }, 1000);

@@ -67,7 +67,7 @@ def marquee(imgs, cols, cls):
 home = f'''
 <header class="hero" id="top">
   <div class="poster"></div>
-  <div id="ytbg" class="yt"></div>
+  <div id="ytwrap" class="yt"><div id="ytbg"></div></div>
   <div class="shade"></div>
   <div class="txt">
     <div>
