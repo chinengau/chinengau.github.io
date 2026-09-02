@@ -1,6 +1,7 @@
 /* ===== Chin-En Gau — shared site script ===== */
 const REEL_ID = 'Kb7IJWt5PzY';   // YouTube video ID of the reel
 const REEL_START = 15;           // start second
+const REEL_END   = 209;          // stop here (3:29), fade out, then restart
 
 /* language toggle (remembered per browser) */
 const langBtn = document.getElementById('lang');
@@ -14,7 +15,15 @@ if (langBtn) langBtn.addEventListener('click', () => setLang(document.documentEl
 
 /* mobile menu */
 const menu = document.getElementById('menu'), burger = document.getElementById('burger');
-if (burger) burger.addEventListener('click', () => menu.classList.toggle('open'));
+if (burger) burger.addEventListener('click', () => {
+  const open = menu.classList.toggle('open');
+  document.querySelector('.nav').classList.toggle('menuopen', open);
+  burger.textContent = open ? 'Close' : 'Menu';
+});
+if (menu) menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  menu.classList.remove('open'); document.querySelector('.nav').classList.remove('menuopen');
+  if (burger) burger.textContent = 'Menu';
+}));
 
 /* modal: reel with sound / lightbox */
 const modal = document.getElementById('modal'), box = document.getElementById('modalbox');
@@ -37,7 +46,7 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
 document.querySelectorAll('#yr').forEach(el => el.textContent = new Date().getFullYear());
 
 /* looping background reel on the home page */
-const ytwrap = document.getElementById('ytwrap');
+const ytwrap = document.getElementById('ytwrap'), curtain = document.getElementById('curtain');
 if (ytwrap) {
   function sizeBg(){
     const w = innerWidth, h = innerHeight;
@@ -46,27 +55,40 @@ if (ytwrap) {
   }
   sizeBg(); addEventListener('resize', sizeBg);
   const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
+
   window.onYouTubeIframeAPIReady = function(){
+    let restarting = false;
+    const show = () => curtain.classList.add('off');     // curtain fades away -> video visible
+    const hide = () => curtain.classList.remove('off');  // black covers the player completely
+
     const p = new YT.Player('ytbg', { videoId: REEL_ID,
-      playerVars: { autoplay:1, mute:1, controls:0, start:REEL_START, loop:1, playlist:REEL_ID, playsinline:1, rel:0, modestbranding:1, iv_load_policy:3, disablekb:1, fs:0 },
+      playerVars: { autoplay:1, mute:1, controls:0, start:REEL_START, playsinline:1,
+                    rel:0, modestbranding:1, iv_load_policy:3, disablekb:1, fs:0 },
       events: {
         onReady: e => { e.target.mute(); e.target.playVideo(); },
         onStateChange: e => {
           const S = YT.PlayerState;
-          if (e.data === S.PLAYING) {
-            // only reveal once frames are genuinely rolling, so YouTube's
-            // play-button overlay is never visible
-            const t0 = e.target.getCurrentTime();
-            const iv = setInterval(() => {
-              try { if (e.target.getCurrentTime() > t0 + 0.35) { ytwrap.classList.add('on'); clearInterval(iv); } } catch(err) { clearInterval(iv); }
-            }, 80);
-            setTimeout(() => clearInterval(iv), 6000);
-          } else if (e.data === S.PAUSED || e.data === -1 || e.data === S.CUED) {
-            ytwrap.classList.remove('on');
-          }
-          if (e.data === S.ENDED) { e.target.seekTo(REEL_START); e.target.playVideo(); }
+          // any state that would reveal YouTube's own play button keeps the curtain down
+          if (e.data !== S.PLAYING) hide();
+          if (e.data === S.ENDED && !restarting) { e.target.seekTo(REEL_START); e.target.playVideo(); }
         }
       }});
-    setInterval(() => { try { if (p.getCurrentTime() < REEL_START - .5) p.seekTo(REEL_START); } catch(e) {} }, 1000);
+
+    setInterval(() => {
+      let t, st;
+      try { t = p.getCurrentTime(); st = p.getPlayerState(); } catch (err) { return; }
+      if (restarting) return;
+      if (t >= REEL_END) {                       // reached 3:29 -> fade out, rewind, fade back in
+        restarting = true; hide();
+        setTimeout(() => {
+          try { p.seekTo(REEL_START); p.playVideo(); } catch (err) {}
+          restarting = false;
+        }, 950);
+        return;
+      }
+      if (t < REEL_START - 0.5) { try { p.seekTo(REEL_START); } catch (err) {} return; }
+      // reveal only once frames are genuinely rolling, so no play button is ever seen
+      if (st === YT.PlayerState.PLAYING && t > REEL_START + 0.35) show();
+    }, 200);
   };
 }
