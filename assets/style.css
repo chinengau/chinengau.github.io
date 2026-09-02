@@ -44,8 +44,8 @@ html[lang="zh"] [data-en]{display:none!important}
 
 /* hero */
 .hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:#000}
-.hero .poster{position:absolute;inset:0;background:url(../img/a-journey-of-jack-02.jpg) center/cover;opacity:.7}
-.hero .yt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;opacity:0;transition:opacity 1.2s}
+.hero .poster{position:absolute;inset:0;background:#000}
+.hero .yt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;opacity:0;transition:opacity .5s}
 .hero .yt.on{opacity:1}
 .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,.05) 45%,rgba(11,11,12,.92) 100%)}
 .hero .txt{position:absolute;left:4vw;right:4vw;bottom:8vh;display:flex;justify-content:space-between;align-items:flex-end;gap:30px}

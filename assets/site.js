@@ -1,6 +1,6 @@
 /* ===== Chin-En Gau — shared site script ===== */
 const REEL_ID = 'Kb7IJWt5PzY';   // YouTube video ID of the reel
-const REEL_START = 6;            // start second
+const REEL_START = 15;           // start second
 
 /* language toggle (remembered per browser) */
 const langBtn = document.getElementById('lang');
