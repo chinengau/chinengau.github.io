@@ -104,13 +104,29 @@ if (ytwrap) {
   if (bgvid) {
     bgvid.muted = true; bgvid.defaultMuted = true;
     bgvid.src = 'assets/reel-loop.mp4';
+
     bgvid.addEventListener('playing', () => {
-      handled = true; bgvid.classList.add('on'); reveal();
+      handled = true;
+      bgvid.classList.add('on');
+      reveal();
+      // if the fallback had already been started, drop it - the loop wins
+      const f = document.querySelector('#ytwrap iframe');
+      if (f) f.remove();
     }, { once: true });
+
+    // retry play() once enough has buffered (the first call can be too early)
+    bgvid.addEventListener('canplay', () => { const a = bgvid.play(); if (a && a.catch) a.catch(() => {}); });
     bgvid.addEventListener('error', () => startYouTube());
+
     const attempt = bgvid.play();
-    if (attempt && attempt.catch) attempt.catch(() => startYouTube());
-    setTimeout(() => { if (!handled) startYouTube(); }, 4000);
+    if (attempt && attempt.catch) attempt.catch(() => {});   // wait for canplay instead of bailing
+
+    // only fall back if nothing is loading at all - a slow download is not a failure
+    setTimeout(() => {
+      if (handled) return;
+      if (bgvid.networkState === 2 /* LOADING */ || bgvid.readyState >= 2) return;
+      startYouTube();
+    }, 9000);
   } else {
     startYouTube();
   }
