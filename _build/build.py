@@ -240,7 +240,7 @@ findex = f'''
   <header class="phead">
     <p class="crumb"><a href="../index.html">Home</a><span>/</span>Films</p>
     <h1>Films</h1>
-    <p class="lead">{bi("Director, writer, cinematographer and editor on independent narrative work; director of photography on feature documentary and theatre-film. Screened at Film at Lincoln Center, Tribeca (WIP) and Fargo; supported by the Sundance Institute Documentary Fund and The Gotham.","獨立敘事作品的導演、編劇、攝影與剪接；紀錄長片與劇場電影的攝影指導。作品曾於林肯中心電影協會、翠貝卡影展（WIP）與法戈影展放映，並獲日舞影展紀錄片基金與 The Gotham 支持。")}</p>
+    <p class="lead">{bi("Director, writer, cinematographer and editor on independent narrative work; director of photography on fiction and documentary features. Screened at Film at Lincoln Center, Tribeca (WIP) and Fargo; supported by the Sundance Institute Documentary Fund and The Gotham.","獨立敘事作品的導演、編劇、攝影與剪接；劇情長片與紀錄長片的攝影指導。作品曾於林肯中心電影協會、翠貝卡影展（WIP）與法戈影展放映，並獲日舞影展紀錄片基金與 The Gotham 支持。")}</p>
   </header>
   <div class="flist">{fcards}
   </div>
