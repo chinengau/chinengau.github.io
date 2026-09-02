@@ -14,6 +14,8 @@ def _ver():
         except OSError: pass
     return h.hexdigest()[:8]
 ASSET_VER = _ver()
+BASE = "https://chinengau.github.io/"
+PAGES = []
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;500&display=swap" rel="stylesheet">'
 
 def bi(en, zh):
@@ -30,6 +32,10 @@ def shell(title, body, root="", active="", desc="", ogimg=""):
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc or 'Chin-En Gau — New York based filmmaker. Producer of vertical short-drama series for DramaBox; director and cinematographer of narrative and documentary films.')}">
 <meta property="og:title" content="{html.escape(title)}">{og}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chin-En Gau">
+<meta name="twitter:card" content="summary_large_image">
+<!--CANON-->
 {FONTS}
 <link rel="stylesheet" href="{root}assets/style.css?v={ASSET_VER}">
 </head>
@@ -59,6 +65,12 @@ def shell(title, body, root="", active="", desc="", ogimg=""):
 </html>'''
 
 def write(path, content):
+    url = BASE + ("" if path == "index.html" else path.replace("/index.html", "/"))
+    PAGES.append(url)
+    content = content.replace("<!--CANON-->", '<link rel="canonical" href="%s">' % url)
+    # og:image must be absolute for link previews
+    content = content.replace('<meta property="og:image" content="../', '<meta property="og:image" content="' + BASE)
+    content = content.replace('<meta property="og:image" content="img/', '<meta property="og:image" content="' + BASE + 'img/')
     p = os.path.join(OUT, path); os.makedirs(os.path.dirname(p), exist_ok=True)
     open(p, "w", encoding="utf-8").write(content); print("wrote", path)
 
@@ -119,6 +131,23 @@ home = f'''
     </div>
   </a>
 </section>'''
+home += '''
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person",
+ "name":"Chin-En Gau","alternateName":["\u9ad8\u9756\u6069","Chin En Gau","Gau Chin-En"],
+ "url":"https://chinengau.github.io/",
+ "image":"https://chinengau.github.io/img/picture-of-me.jpg",
+ "jobTitle":["Producer","Director","Cinematographer","Editor"],
+ "email":"mailto:gau88813@gmail.com",
+ "nationality":"Taiwanese",
+ "address":{"@type":"PostalAddress","addressLocality":"New York","addressRegion":"NY","addressCountry":"US"},
+ "alumniOf":[{"@type":"CollegeOrUniversity","name":"Stony Brook University"},
+             {"@type":"CollegeOrUniversity","name":"Taipei National University of the Arts"}],
+ "worksFor":{"@type":"Organization","name":"DramaBox"},
+ "sameAs":["https://www.imdb.com/name/nm14132633/",
+           "https://www.linkedin.com/in/chin-en-gau-492660231",
+           "https://www.instagram.com/chin_en_gau/"]}
+</script>'''
 write("index.html", shell("Chin-En Gau — Filmmaker", home, ogimg="img/a-journey-of-jack-02.jpg"))
 
 # ---------------- VERTICALS INDEX ----------------
@@ -336,4 +365,16 @@ press = f'''
 </div>'''
 write("press.html", shell("Press — Chin-En Gau", press, active="press"))
 
+# ---------------- sitemap.xml + robots.txt ----------------
+sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+import datetime
+today = datetime.date.today().isoformat()
+for u in PAGES:
+    pri = "1.0" if u == BASE else ("0.8" if u.endswith("/") else "0.6")
+    sm.append("  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>" % (u, today, pri))
+sm.append("</urlset>")
+open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(sm) + "\n")
+open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8").write(
+    "User-agent: *\nAllow: /\n\nSitemap: " + BASE + "sitemap.xml\n")
+print("wrote sitemap.xml (%d urls) + robots.txt" % len(PAGES))
 print("done")
