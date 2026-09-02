@@ -4,6 +4,16 @@ import os, html
 from data import SITE, VERTICALS, FILMS, PRESS
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+
+# ?v= stamp so browsers re-fetch CSS/JS after an update instead of using a cached copy
+import hashlib
+def _ver():
+    h = hashlib.md5()
+    for f in ("assets/style.css", "assets/site.js"):
+        try: h.update(open(os.path.join(OUT, f), "rb").read())
+        except OSError: pass
+    return h.hexdigest()[:8]
+ASSET_VER = _ver()
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;500&display=swap" rel="stylesheet">'
 
 def bi(en, zh):
@@ -21,7 +31,7 @@ def shell(title, body, root="", active="", desc="", ogimg=""):
 <meta name="description" content="{html.escape(desc or 'Chin-En Gau — New York based filmmaker. Producer of vertical short-drama series for DramaBox; director and cinematographer of narrative and documentary films.')}">
 <meta property="og:title" content="{html.escape(title)}">{og}
 {FONTS}
-<link rel="stylesheet" href="{root}assets/style.css">
+<link rel="stylesheet" href="{root}assets/style.css?v={ASSET_VER}">
 </head>
 <body>
 <nav class="nav">
@@ -44,7 +54,7 @@ def shell(title, body, root="", active="", desc="", ogimg=""):
   <span><a href="{SITE["imdb"]}" target="_blank" rel="noopener">IMDb</a> &nbsp;·&nbsp; <a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a> &nbsp;·&nbsp; <a href="mailto:{SITE["email"]}">Email</a></span>
 </footer>
 <div class="modal" id="modal"><button class="x" id="closemodal">Close ✕</button><div class="box" id="modalbox"></div></div>
-<script src="{root}assets/site.js"></script>
+<script src="{root}assets/site.js?v={ASSET_VER}"></script>
 </body>
 </html>'''
 
