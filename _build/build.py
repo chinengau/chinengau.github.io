@@ -139,7 +139,7 @@ home += '''
  "url":"https://chinengau.github.io/",
  "image":"https://chinengau.github.io/img/picture-of-me.jpg",
  "jobTitle":["Producer","Director","Cinematographer","Editor"],
- "email":"mailto:gau88813@gmail.com",
+ "email":"mailto:chinen.film@gmail.com",
  "nationality":"Taiwanese",
  "address":{"@type":"PostalAddress","addressLocality":"New York","addressRegion":"NY","addressCountry":"US"},
  "alumniOf":[{"@type":"CollegeOrUniversity","name":"Stony Brook University"},

@@ -3,7 +3,7 @@
 
 SITE = {
     "name": "Chin-En Gau",
-    "email": "gau88813@gmail.com",
+    "email": "chinen.film@gmail.com",
     "imdb": "https://www.imdb.com/name/nm14132633/",
     "linkedin": "https://www.linkedin.com/in/chin-en-gau-492660231",
     "instagram": "https://www.instagram.com/chin_en_gau/",
