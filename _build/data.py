@@ -55,7 +55,7 @@ FILMS = [
  dict(slug="a-journey-of-jack-and-tom", title="A Journey of Jack (and Tom)", year=2026, kind_en="Feature · Comedy", kind_zh="長片 · 喜劇",
       role_en="Director · Writer · Cinematographer · Editor", role_zh="導演 · 編劇 · 攝影 · 剪接",
       runtime="83 min", status_en="Completed — in post-production", status_zh="已完成拍攝，後製中",
-      hero="a-journey-of-jack-02.jpg", stills=["a-journey-of-jack-01.jpg","a-journey-of-jack-04.jpg","a-journey-of-jack-03.jpg"],
+      hero="a-journey-of-jack-02.jpg", stills=["a-journey-of-jack-01.jpg","a-journey-of-jack-04.jpg","a-journey-of-jack-03.jpg"], poster="a-journey-of-jack-poster.jpg",
       laurels=["FilmNorth Inclusive & Socially Conscious Filmmaking Lab 2025","DI3 Fellowship","Lichtenstein–Reeves Fund"],
       syn_en="Two restless teens from Taiwan slip away to New York, chasing a dream of shooting a music video in Times Square—but the America they find is “slightly” nothing like the one they imagined.",
       syn_zh="兩個不安分的台灣少年偷偷溜到紐約，夢想在時代廣場拍一支 MV——但他們遇見的美國，跟想像中的「稍微」有點不一樣。",

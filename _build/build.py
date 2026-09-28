@@ -259,7 +259,7 @@ for i, f in enumerate(FILMS):
     if f.get("status_en"): facts += f'<dl><dt>{bi("Notes","備註")}</dt><dd>{bi(f["status_en"], f["status_zh"])}</dd></dl>'
     for k, val in f.get("credits", []): facts += f'<dl><dt>{k}</dt><dd>{val}</dd></dl>'
     laur = "".join(f"<span>{l}</span>" for l in f["laurels"])
-    poster = f'<div class="poster" style="aspect-ratio:2/3;max-width:320px"><img src="../img/{f["poster"]}" alt=""></div>' if f.get("poster") else ""
+    poster = f'<div class="poster natural"><img src="../img/{f["poster"]}" alt="{html.escape(f["title"])} poster"></div>' if f.get("poster") else ""
     syn = f'<p data-en>{f["syn_en"]}</p><p data-zh>{f["syn_zh"]}</p>' if f["syn_en"] else f'<p class="note">{bi("Synopsis coming soon.","劇情簡介近期更新。")}</p>'
     note = f'<p class="note">{bi(f["note_en"], f["note_zh"])}</p>' if f.get("note_en") else ""
     gal = ""
