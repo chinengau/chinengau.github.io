@@ -164,7 +164,7 @@ PRESS = [
       url="https://www.worldjournal.com/wj/story/121390/9473195",
       blurb_en="A profile on the rise of vertical short drama in the U.S. as seen from inside DramaBox — the three-minute, emotion-first format, its largely female audience, and the door it has opened for Chinese-speaking newcomers in the industry.",
       blurb_zh="從 DramaBox 內部觀察短劇在美國的興起：三分鐘直式、情緒導向的敘事形式、以女性為主的觀眾，以及它為華人新移民打開的影視產業缺口。",
-      quote_en="“It is the first entertainment wave led by Chinese people since cinema was born in 1895.”", quote_zh="「這是 1895 年電影誕生以來，第一次由華人引起的娛樂潮流。」"),
+      quote_en="“It may be the first entertainment wave led by Asian people since cinema was born in 1895.”", quote_zh="「這是 1895 年電影誕生以來，第一次由華人引起的娛樂潮流。」"),
  dict(outlet="CanvasRebel Magazine", date="2024-03-28", lang="en",
       title_en="Meet Chin-En Gau", title_zh="Meet Chin-En Gau",
       url="https://canvasrebel.com/meet-chin-en-gau/",
