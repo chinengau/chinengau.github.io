@@ -151,6 +151,13 @@ FILMS = [
 
 # ---------- 新聞 / 專訪 ----------
 PRESS = [
+ dict(outlet="換日線 Crossing · Guest essay 讀者投書", date="2026-11-09", lang="zh",
+      title_en="Are AI short dramas addictive? A view from the U.S. industry: when anyone can make a blockbuster, what keeps viewers watching?",
+      title_zh="AI 短劇愈看愈上癮？美國影視產業直擊：當人人都能拍大片，什麼才留得住觀眾？",
+      url="https://crossing.cw.com.tw/article/21147",
+      blurb_en="A first-person essay on watching vertical short drama move from location shoots to AI production in a matter of months — and why, once the technical barrier disappears, retention still comes down to character, empathy and “human warmth.”",
+      blurb_zh="以親身經驗談短劇如何在短短數月內從實景拍攝轉向 AI 製作，以及當技術門檻消失後，真正留住觀眾的仍是人物關係、共情與「人味」。",
+      quote_en="", quote_zh="「敘事的本質始終沒有改變。」"),
  dict(outlet="世界新聞網 World Journal", date="2026-04-30", lang="zh",
       title_en="Taiwanese producer Chin-En Gau: new-immigrant storytelling, and verticals as the opening",
       title_zh="台灣製片高靖恩：新移民敘事 短劇成契機",
