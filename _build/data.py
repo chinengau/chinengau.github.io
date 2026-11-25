@@ -151,6 +151,12 @@ FILMS = [
 
 # ---------- 新聞 / 專訪 ----------
 PRESS = [
+ dict(outlet="Bold Journey Magazine", date="2026-11-24", lang="en",
+      title_en="Meet Chin-En Gau", title_zh="Meet Chin-En Gau",
+      url="https://boldjourney.com/meet-chin-en-gau-2/",
+      blurb_en="A second interview with Bold Journey on keeping creative work alive alongside a day job, finding ideas in exhaustion and everyday life, persistence and collaboration, and his current feature, A Journey of Jack (and Tom).",
+      blurb_zh="Bold Journey 的第二次專訪：談如何在正職之外讓創作持續、從疲憊與日常中找到靈感、堅持與合作，以及他目前的長片《A Journey of Jack (and Tom)》。",
+      quote_en="“I don’t expect life to get easier.”", quote_zh=""),
  dict(outlet="換日線 Crossing · Guest essay 讀者投書", date="2026-11-09", lang="zh",
       title_en="Are AI short dramas addictive? A view from the U.S. industry: when anyone can make a blockbuster, what keeps viewers watching?",
       title_zh="AI 短劇愈看愈上癮？美國影視產業直擊：當人人都能拍大片，什麼才留得住觀眾？",
